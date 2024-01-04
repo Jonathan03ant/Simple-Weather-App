@@ -8,6 +8,10 @@ function App() {
     const [city, setCity] = useState('Toronto');
     const [weatherData, setWeatherData] = useState(null);
 
+    const kelvinToCelsius = (kel) => {
+        return Math.round(kel - 273.15);
+    }
+
     useEffect(() => {
         const fetchWeather = async () => {
             const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=13915fa1b194caeb1e9ae2f1ebd470a5`);
@@ -42,18 +46,18 @@ function App() {
                     <p className=' text-4xl font-bold'>{weatherData && weatherData.name}</p>
                 </div>
                 <div>
-                    <h2 className='text-7xl'>{weatherData && weatherData.main.temp}</h2>
+                    <h2 className='text-7xl'>{weatherData && kelvinToCelsius(weatherData.main.temp)}°C</h2>
                 </div>
 
             </div>
 
-            <div className='bottom mb-80 flex space-x-10'>
+            <div className='bottom mb-40 flex space-x-10'>
                 <div> 
                     <h3> {weatherData && weatherData.main.humidity}% </h3>
                     <h3> Humidity </h3>
                 </div>
                 <div>
-                    <h3>{weatherData && weatherData.main.feels_like}</h3>
+                    <h3>{weatherData && kelvinToCelsius(weatherData.main.feels_like)}°C</h3>
                     <h3> Feels Like </h3>
                 </div>
 
